@@ -3,23 +3,30 @@ import json
 
 def load_candidates():
     """функция, которая загрузит данные из файла"""
-    with open('candidates.json') as file:
+    with open('candidates.json', encoding='utf-8') as file:
         students_list = json.load(file)
         return students_list
 
 
 def get_all():
-    """функция, которая покажет всех кандидатов"""
-    pass
+    """покажет всех кандидатов"""
+    candidates = load_candidates()
+    return candidates
 
 
 def get_by_pk(pk):
-    """функция, которая вернет кандидата по pk"""
-    pass
+    """вернет кандидата по pk"""
+    candidates = load_candidates()
+    for candidat in candidates:
+        if candidat.get("pk") == pk:
+            return candidat
 
 
 def get_by_skill(skill_name):
     """функция, которая вернет кандидатов по навыку"""
-    pass
-
-load_candidates()
+    candidates = load_candidates()
+    candidates_by_skill = []
+    for candidat in candidates:
+        if skill_name in candidat.get("skills") or skill_name.title() in candidat.get("skills"):
+            candidates_by_skill.append(candidat)
+    return candidates_by_skill
