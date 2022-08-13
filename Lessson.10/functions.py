@@ -25,6 +25,6 @@ def get_by_skill(candidates, skill_name):
     """функция, которая вернет кандидатов по навыку"""
     candidates_by_skill = []
     for candidat in candidates:
-        if skill_name in candidat.get("skills") or skill_name.title() in candidat.get("skills"):
+        if skill_name in candidat.get("skills") or skill_name.title() in candidat.get("skills"):\
             candidates_by_skill.append(candidat)
     return candidates_by_skill

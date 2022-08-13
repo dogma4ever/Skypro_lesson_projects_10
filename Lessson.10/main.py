@@ -25,4 +25,17 @@ def page_candidates(pk):
     candidat_skills = candidat.get("skills")
     return f"<img src='({candidat_url})'><br><pre>{candidat_name}<br>{candidat_position}<br>{candidat_skills}</pre>"
 
+
+@app.route("/skills/<skill>")
+def page_skills(skill):
+    candidates_by_skill = get_by_skill(candidates, skill)
+    list_of_candidats_by_skill = ''
+    for candidat in candidates_by_skill:
+        candidat_name = candidat.get("name")
+        candidat_position = candidat.get("position")
+        candidat_skills = candidat.get("skills")
+        list_of_candidats_by_skill += candidat_name + "<br>" + candidat_position + "<br>" + candidat_skills + "<br>" + "<br>"
+    return f"<pre>{list_of_candidats_by_skill}</pre>"
+
+
 app.run()
