@@ -14,17 +14,15 @@ def get_all():
     return candidates
 
 
-def get_by_pk(pk):
+def get_by_pk(candidates, pk):
     """вернет кандидата по pk"""
-    candidates = load_candidates()
     for candidat in candidates:
         if candidat.get("pk") == pk:
             return candidat
 
 
-def get_by_skill(skill_name):
+def get_by_skill(candidates, skill_name):
     """функция, которая вернет кандидатов по навыку"""
-    candidates = load_candidates()
     candidates_by_skill = []
     for candidat in candidates:
         if skill_name in candidat.get("skills") or skill_name.title() in candidat.get("skills"):
