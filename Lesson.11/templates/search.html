@@ -5,7 +5,7 @@
     <title>Список кандидатов с заданым именем</title>
 </head>
 <body>
-<h1>найдено кандидатов {{len(searched_candidates)}}</h1><br>
+<h1>Найдено кандидатов {{searched_candidates|length}}</h1>
 {% for candidate in searched_candidates %}
     <p><a href="/candidate/{{candidate.get('id')}}">{{ candidate.get('name') }}</a></p>
 {% endfor %}

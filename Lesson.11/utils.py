@@ -21,7 +21,7 @@ def get_candidates_by_name(candidates, candidate_name):
     for candidat in candidates:
         if candidate_name.title() in candidat.get("name"):
             searched_candidates.append(candidat)
-        return searched_candidates
+    return searched_candidates
 
 
 def get_candidates_by_skill(candidates, skill_name):

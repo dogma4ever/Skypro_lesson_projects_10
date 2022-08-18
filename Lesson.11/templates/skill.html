@@ -5,7 +5,7 @@
     <title>Кандидаты со скилами</title>
 </head>
 <body>
-<h1>Найдено со скиллом {{skill}}: {{len(candidates_whit_skill)}}</h1><br>
+<h1>Найдено со скиллом {{skill}}: {{candidates_whit_skill|length}}</h1>
 {% for candidate in candidates_whit_skill %}
 <p><a href="/candidate/{{candidate.get('id')}}">{{ candidate.get('name') }}</a></p>
 {% endfor %}

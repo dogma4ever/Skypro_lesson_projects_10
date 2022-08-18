@@ -19,6 +19,8 @@ def page_candidates(id):
 @app.route("/search/<candidate_name>")
 def page_search(candidate_name):
     searched_candidates = get_candidates_by_name(candidates, candidate_name)
+    if not candidate_name:
+        return "Кандидат не найден"
     return render_template('search.html', searched_candidates=searched_candidates)
 
 
