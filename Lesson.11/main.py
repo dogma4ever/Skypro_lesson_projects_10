@@ -1,41 +1,31 @@
-from flask import Flask
+from flask import Flask, render_template
 from utils import *
 app = Flask(__name__)
 
-candidates = get_all()
+candidates = load_candidates_from_json('candidates.json')
 
 
 @app.route("/")
 def page_index():
-    list_of_candidats = ''
-    for candidat in candidates:
-        candidat_name = candidat.get("name")
-        candidat_position = candidat.get("position")
-        candidat_skills = candidat.get("skills")
-        list_of_candidats += candidat_name + "<br>" + candidat_position + "<br>" + candidat_skills + "<br>" + "<br>"
-    return f"<pre>{list_of_candidats}</pre>"
+    return render_template('list.html', candidates=candidates)
 
 
-@app.route("/candidates/<int:pk>")
-def page_candidates(pk):
-    candidat = get_by_pk(candidates, pk)
-    candidat_url = candidat.get("picture")
-    candidat_name = candidat.get("name")
-    candidat_position = candidat.get("position")
-    candidat_skills = candidat.get("skills")
-    return f"<img src='{candidat_url}'><br><pre>{candidat_name}<br>{candidat_position}<br>{candidat_skills}</pre>"
+@app.route("/candidate/<int:id>")
+def page_candidates(id):
+    candidate = get_candidate(candidates, id)
+    return render_template('card.html', candidate=candidate)
+
+
+@app.route("/search/<candidate_name>")
+def page_search(candidate_name):
+    searched_candidates = get_candidates_by_name(candidates, candidate_name)
+    return render_template('search.html', searched_candidates=searched_candidates)
 
 
 @app.route("/skills/<skill>")
 def page_skills(skill):
-    candidates_by_skill = get_by_skill(candidates, skill)
-    list_of_candidats_by_skill = ''
-    for candidat in candidates_by_skill:
-        candidat_name = candidat.get("name")
-        candidat_position = candidat.get("position")
-        candidat_skills = candidat.get("skills")
-        list_of_candidats_by_skill += candidat_name + "<br>" + candidat_position + "<br>" + candidat_skills + "<br>" + "<br>"
-    return f"<pre>{list_of_candidats_by_skill}</pre>"
+    candidates_whit_skill = get_candidates_by_skill(candidates, skill)
+    return render_template('skill.html', candidates_whit_skill=candidates_whit_skill, skill=skill)
 
 
 app.run()
