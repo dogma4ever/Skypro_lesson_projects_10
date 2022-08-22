@@ -1,0 +1,19 @@
+INFO:werkzeug: * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+INFO:root:Страница магазина запрошена
+INFO:werkzeug:127.0.0.1 - - [22/Aug/2022 18:18:49] "GET /store HTTP/1.1" 200 -
+INFO:root:Главная страница запрошена
+INFO:werkzeug:127.0.0.1 - - [22/Aug/2022 18:18:50] "GET / HTTP/1.1" 200 -
+INFO:root:Главная страница запрошена
+INFO:werkzeug:127.0.0.1 - - [22/Aug/2022 18:18:54] "GET / HTTP/1.1" 200 -
+INFO:root:Страница магазина запрошена
+INFO:werkzeug:127.0.0.1 - - [22/Aug/2022 18:18:55] "GET /store HTTP/1.1" 200 -
+INFO:root:Страница категории 2 запрошена
+INFO:werkzeug:127.0.0.1 - - [22/Aug/2022 18:19:03] "GET /store/2 HTTP/1.1" 200 -
+INFO:root:Страница категории 2 запрошена
+INFO:werkzeug:127.0.0.1 - - [22/Aug/2022 18:20:34] "GET /store/2 HTTP/1.1" 200 -
+INFO:root:Страница категории 3 запрошена
+INFO:werkzeug:127.0.0.1 - - [22/Aug/2022 18:20:35] "GET /store/3 HTTP/1.1" 200 -
+INFO:root:Страница категории 3 запрошена
+INFO:werkzeug:127.0.0.1 - - [22/Aug/2022 18:20:38] "GET /store/3 HTTP/1.1" 200 -
+INFO:root:Страница магазина запрошена
+INFO:werkzeug:127.0.0.1 - - [22/Aug/2022 18:20:39] "GET /store HTTP/1.1" 200 -
