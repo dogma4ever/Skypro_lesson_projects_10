@@ -1,25 +1,20 @@
-import json
-import logging
+import json, logging
 
-logging.basicConfig(filename="basic.log", level=logging.ERROR)
-logging.getLogger("Error")
+"""logging.basicConfig(filename="basic.log", level=logging.ERROR)
+logging.getLogger("Error")"""
 
 
-def read_from_file(path):
+def load_posts() -> list[dict]:
     """считываем из файла данные"""
-    try:
-        with open(path, encoding='utf-8') as file:
-            post_list = json.load(file)
-            return post_list
-    except FileNotFoundError:
-        logging.warning("Файл не найден")
+    with open("posts.json", 'r', encoding='utf-8') as file:
+        return json.load(file)
 
 
-def search_posts(posts, search_phrase):
+def search_posts(search_phrase: str) -> list[dict]:
     """ищем пост в файле"""
     posts_list = []
-    for post in posts:
-        if search_phrase in post("content"):
+    for post in load_posts():
+        if search_phrase.lower() in post["content"].lower():
             posts_list.append(post)
     return posts_list
 
@@ -28,3 +23,14 @@ def write_to_file(path, data):
     """дописываем данные в файл"""
     with open(path, 'a',  encoding='utf-8') as f:
         f.write(data + '\n')
+
+
+def save_picture(picture) -> None:
+    filename = picture.filename
+    path = f"./uploads/images/{filename}"
+    picture.save(path)
+    return path
+
+
+def add_post():
+    pass

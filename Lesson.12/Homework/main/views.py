@@ -1,13 +1,22 @@
-# Добавим импорт шаблонизатора
-from flask import render_template, Blueprint
+import logging
+from json import JSONDecodeError
+from functions import search_posts
 
-# Добавим настройку папки с шаблонами
-main_blueprint = Blueprint('main_blueprint', __name__, template_folder='../templates')
+from flask import render_template, Blueprint, request, json
 
 
-# Добавим render_template
+main_blueprint = Blueprint('main_blueprint', __name__, template_folder='templates')
+
+
 @main_blueprint.route('/')
 def main_page():
+    """это вьюшка главной страницы"""
     return render_template("index.html")
 
 
+@main_blueprint.route('/search')
+def search_page():
+    """эта вьюшка показывает посты полученные из аргументов адресной строки"""
+    search = request.args.get('s', '')
+    posts = search_posts(search)
+    return render_template('post_list.html', query=search, posts=posts)
