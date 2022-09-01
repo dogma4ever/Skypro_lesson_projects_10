@@ -18,5 +18,13 @@ def main_page():
 def search_page():
     """эта вьюшка показывает посты полученные из аргументов адресной строки"""
     search = request.args.get('s', '')
-    posts = search_posts(search)
+    logging.info(f"выполняю поиск по слову {search}")
+    try:
+        posts = search_posts(search)
+    except FileNotFoundError:
+        logging.error("Ошибка загрузки файла с постами")
+        return "Файл не найден"
+    except JSONDecodeError:
+        logging.error("Не корректный формат файла с постами")
+        return "Не корректный файл"
     return render_template('post_list.html', query=search, posts=posts)
