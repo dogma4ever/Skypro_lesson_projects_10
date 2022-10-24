@@ -114,9 +114,9 @@ class Offer(db.Model):
 db.drop_all()
 db.create_all()
 
-load_order(r"E:\Skypro_lesson_projects\Lesson. 16\Homework\Data\orders.json")
-load_offer(r"E:\Skypro_lesson_projects\Lesson. 16\Homework\Data\offers.json")
-load_user(r"E:\Skypro_lesson_projects\Lesson. 16\Homework\Data\users.json")
+load_order(r".\Data\orders.json")
+load_offer(r".\Data\offers.json")
+load_user(r".\Data\users.json")
 
 
 @app.route("/users", methods=['GET', 'POST'])
