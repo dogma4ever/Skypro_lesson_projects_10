@@ -87,8 +87,6 @@ class Order(db.Model):
             "end_date": self.end_date,
             "address": self.address,
             "price": self.price,
-            "customer": self.customer,
-            "executor": self.executor
         }
 
 
@@ -106,8 +104,7 @@ class Offer(db.Model):
         return {
             "id": self.id,
             "order_id": self.order_id,
-            "order": self.order,
-            "executor": self.executor
+            "executor_id": self.executor_id
         }
 
 
@@ -133,6 +130,7 @@ def get_users():
         data = request.json
 
         db.session.add(User(**data))
+        db.session.commit()
 
         return app.response_class(json.dumps("Done"), mimetype="application/json", status=200)
 
@@ -168,6 +166,8 @@ def get_user(sid: int):
         user.phone = data.get("phone")
 
         db.session.commit()
+        return app.response_class(json.dumps("Done"), mimetype="application/json", status=200)
+
 
     if request.method == 'DELETE':
         if user is None:
@@ -175,6 +175,7 @@ def get_user(sid: int):
 
         db.session.delete(user)
         db.session.commit()
+        return app.response_class(json.dumps("Done"), mimetype="application/json", status=200)
 
 
 @app.route("/orders", methods=['GET', 'POST'])
@@ -184,13 +185,14 @@ def get_orders():
         for order in db.session.query(Order).all():
             result.append(order.return_data())
 
-        return app.response_class(json.dumps(result), mimetype="application/json", status=200)
+        return app.response_class(json.dumps(result, ensure_ascii=False), mimetype="application/json", status=200)
 
     if request.method == 'POST':
 
         data = request.json
 
         db.session.add(Order(**data))
+        db.session.commit()
 
         return app.response_class(json.dumps("Done"), mimetype="application/json", status=200)
 
@@ -228,6 +230,7 @@ def get_order(sid: int):
         order.price = data.get("price")
 
         db.session.commit()
+        return app.response_class(json.dumps("Done"), mimetype="application/json", status=200)
 
     if request.method == 'DELETE':
         if order is None:
@@ -235,6 +238,7 @@ def get_order(sid: int):
 
         db.session.delete(order)
         db.session.commit()
+        return app.response_class(json.dumps("Done"), mimetype="application/json", status=200)
 
 
 @app.route("/offers", methods=['GET', 'POST'])
@@ -251,6 +255,7 @@ def get_offers():
         data = request.json
 
         db.session.add(Offer(**data))
+        db.session.commit()
 
         return app.response_class(json.dumps("Done"), mimetype="application/json", status=200)
 
@@ -266,6 +271,7 @@ def get_offer(sid: int):
         return json.dumps({
             "id": offer.id,
             "order_id": offer.order_id,
+            "executor_id": offer.executor_id
         }, ensure_ascii=False)
 
     if request.method == 'PUT':
@@ -278,6 +284,7 @@ def get_offer(sid: int):
         offer.order_id = data.get("order_id")
 
         db.session.commit()
+        return app.response_class(json.dumps("Done"), mimetype="application/json", status=200)
 
     if request.method == 'DELETE':
         if offer is None:
@@ -285,7 +292,8 @@ def get_offer(sid: int):
 
         db.session.delete(offer)
         db.session.commit()
+        return app.response_class(json.dumps("Done"), mimetype="application/json", status=200)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
