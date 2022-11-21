@@ -18,13 +18,13 @@ def create_app(config_object):
 
 
 def register_extensions(app):
-    create_app()
     db.init_app(app)
     api = Api(app)
     api.add_namespace(director_ns)
     api.add_namespace(genre_ns)
     api.add_namespace(movie_ns)
     api.add_namespace(user_ns)
+    create_data(app, db)
 
 
 def create_data(app, db):

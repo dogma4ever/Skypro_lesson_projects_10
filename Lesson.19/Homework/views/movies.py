@@ -1,6 +1,6 @@
 from flask import request
 from flask_restx import Resource, Namespace
-
+from utils import auth_required, admin_required
 from models import Movie, MovieSchema
 from setup_db import db
 
@@ -9,6 +9,7 @@ movie_ns = Namespace('movies')
 
 @movie_ns.route('/')
 class MoviesView(Resource):
+    @auth_required
     def get(self):
         director = request.args.get("director_id")
         genre = request.args.get("genre_id")
@@ -24,6 +25,8 @@ class MoviesView(Resource):
         res = MovieSchema(many=True).dump(all_movies)
         return res, 200
 
+    @auth_required
+    @admin_required
     def post(self):
         req_json = request.json
         ent = Movie(**req_json)
@@ -35,11 +38,14 @@ class MoviesView(Resource):
 
 @movie_ns.route('/<int:bid>')
 class MovieView(Resource):
+    @auth_required
     def get(self, bid):
         b = db.session.query(Movie).get(bid)
         sm_d = MovieSchema().dump(b)
         return sm_d, 200
 
+    @auth_required
+    @admin_required
     def put(self, bid):
         movie = db.session.query(Movie).get(bid)
         req_json = request.json
@@ -54,6 +60,8 @@ class MovieView(Resource):
         db.session.commit()
         return "", 204
 
+    @auth_required
+    @admin_required
     def delete(self, bid):
         movie = db.session.query(Movie).get(bid)
 
